@@ -52,7 +52,7 @@ export const TextFieldFormElement: FormElement = {
     label: "Text Field",
   },
   designerComponent: DesignerComponent,
-  formComponent: () => <div>Form component</div>,
+  formComponent: FormComponent,
   propertiesComponent: PropertiesComponent,
 };
 
@@ -60,8 +60,49 @@ type CustomInstance = FromElementInstance & {
   extraAttributes: typeof extraAttributes;
 };
 
-type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
+function DesignerComponent({
+  elementInstance,
+}: {
+  elementInstance: FromElementInstance;
+}) {
+  const element = elementInstance as CustomInstance;
+  const { label, required, placeHolder, helperText } = element.extraAttributes;
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <Label>
+        {label}
+        {required && "*"}
+      </Label>
+      <Input readOnly disabled placeholder={placeHolder} />
+      {helperText && (
+        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+      )}
+    </div>
+  );
+}
 
+function FormComponent({
+  elementInstance,
+}: {
+  elementInstance: FromElementInstance;
+}) {
+  const element = elementInstance as CustomInstance;
+  const { label, required, placeHolder, helperText } = element.extraAttributes;
+  return (
+    <div className="flex flex-col gap-2 w-full">
+      <Label>
+        {label}
+        {required && "*"}
+      </Label>
+      <Input placeholder={placeHolder} />
+      {helperText && (
+        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
+      )}
+    </div>
+  );
+}
+
+type propertiesFormSchemaType = z.infer<typeof propertiesSchema>;
 function PropertiesComponent({
   elementInstance,
 }: {
@@ -196,26 +237,5 @@ function PropertiesComponent({
         />
       </form>
     </Form>
-  );
-}
-
-function DesignerComponent({
-  elementInstance,
-}: {
-  elementInstance: FromElementInstance;
-}) {
-  const element = elementInstance as CustomInstance;
-  const { label, required, placeHolder, helperText } = element.extraAttributes;
-  return (
-    <div className="flex flex-col gap-2 w-full">
-      <Label>
-        {label}
-        {required && "*"}
-      </Label>
-      <Input readOnly disabled placeholder={placeHolder} />
-      {helperText && (
-        <p className="text-muted-foreground text-[0.8rem]">{helperText}</p>
-      )}
-    </div>
   );
 }
