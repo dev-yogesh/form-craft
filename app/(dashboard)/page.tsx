@@ -56,7 +56,7 @@ interface StatsCardProps {
   loading: boolean;
 }
 
-function StatsCards(props: StatsCardProps) {
+export function StatsCards(props: StatsCardProps) {
   const { data, loading } = props;
 
   return (
@@ -100,7 +100,7 @@ function StatsCards(props: StatsCardProps) {
   );
 }
 
-function StatsCard({
+export function StatsCard({
   title,
   value,
   icon,
