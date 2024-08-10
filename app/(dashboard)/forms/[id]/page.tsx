@@ -169,7 +169,7 @@ async function SubmissionsTable({ id }: { id: number }) {
           </TableHeader>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRow>
+              <TableRow key={index}>
                 {columns.map((column) => (
                   <RowCell
                     key={column.id}
